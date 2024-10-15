@@ -15,6 +15,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      # Install Heroku CLI
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+
+      # Authenticate with Heroku
+      - name: Authenticate with Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
@@ -53,7 +64,5 @@ jobs:
           # By default, this argument is set to "web".
           # For more information look at https://devcenter.heroku.com/articles/process-model
           process_type: web
-          
-   
           
 ### ⬆ IMPORTANT PART ⬆ ###
